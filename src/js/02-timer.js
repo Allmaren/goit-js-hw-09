@@ -12,6 +12,7 @@ const refs = {
 
 refs.start.setAttribute('disabled', true);
 const DATE_NOW = new Date();
+const INTERVAL = 1000;
 
 const options = {
   enableTime: true,
@@ -25,24 +26,36 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
-function validDate(date) {
-  if (date <= DATE_NOW) {
+function validDate(selectedDate) {
+  if (selectedDate <= DATE_NOW) {
     Notify.failure('Please choose a date in the future');
     refs.start.setAttribute('disabled', true);
-  } else refs.start.removeAttribute('disabled');
+  } else {
+    onStartTimer(selectedDate);
+    refs.start.removeAttribute('disabled');
+  }
 }
-
-refs.start.addEventListener('click', onStartTimer);
 
 function onStartTimer(selectedDates) {
   let timerInMs = Date.parse(selectedDates) - DATE_NOW;
   let objTimerValue = convertMs(timerInMs);
-  refs.start.setAttribute('disabled', true);
-  timeId = setInterval(() => {
-    if (timerInMs <= 0) {
-      clearInterval(timeId);
-      return;
-    }
+
+  refs.start.addEventListener('click', () => {
+    refs.start.setAttribute('disabled', true);
+    timeId = setInterval(() => {
+      if (timerInMs <= 0) {
+        clearInterval(timeId);
+        return;
+      }
+      objTimerValue = convertMs(timerInMs);
+      refs.days.textContent = objTimerValue.hours;
+      refs.hours.textContent = objTimerValue.hours;
+      refs.minutes.textContent = objTimerValue.minutes;
+      refs.seconds.textContent = objTimerValue.seconds;
+      timerInMs -= INTERVAL;
+    }, INTERVAL);
+
+    console.log(convertMs(Date.parse(selectedDates) - DATE_NOW));
   });
 }
 
