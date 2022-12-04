@@ -25,6 +25,9 @@ const options = {
 };
 
 flatpickr('#datetime-picker', options);
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
 
 function validDate(selectedDate) {
   if (selectedDate <= DATE_NOW) {
@@ -48,10 +51,10 @@ function onStartTimer(selectedDates) {
         return;
       }
       objTimerValue = convertMs(timerInMs);
-      refs.days.textContent = objTimerValue.hours;
-      refs.hours.textContent = objTimerValue.hours;
-      refs.minutes.textContent = objTimerValue.minutes;
-      refs.seconds.textContent = objTimerValue.seconds;
+      refs.days.textContent = pad(objTimerValue.hours);
+      refs.hours.textContent = pad(objTimerValue.hours);
+      refs.minutes.textContent = pad(objTimerValue.minutes);
+      refs.seconds.textContent = pad(objTimerValue.seconds);
       timerInMs -= INTERVAL;
     }, INTERVAL);
 
