@@ -13,6 +13,7 @@ const refs = {
 refs.start.setAttribute('disabled', true);
 const DATE_NOW = new Date();
 const INTERVAL = 1000;
+let timeId = 0;
 
 const options = {
   enableTime: true,
