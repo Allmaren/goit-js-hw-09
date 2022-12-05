@@ -25,6 +25,7 @@ const options = {
 };
 
 flatpickr('#datetime-picker', options);
+
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
@@ -51,14 +52,14 @@ function onStartTimer(selectedDates) {
         return;
       }
       objTimerValue = convertMs(timerInMs);
-      refs.days.textContent = addLeadingZero(objTimerValue.hours);
+      refs.days.textContent = addLeadingZero(objTimerValue.days);
       refs.hours.textContent = addLeadingZero(objTimerValue.hours);
       refs.minutes.textContent = addLeadingZero(objTimerValue.minutes);
       refs.seconds.textContent = addLeadingZero(objTimerValue.seconds);
       timerInMs -= INTERVAL;
     }, INTERVAL);
 
-    console.log(convertMs(Date.parse(selectedDates) - DATE_NOW));
+    // console.log(convertMs(Date.parse(selectedDates) - DATE_NOW));
   });
 }
 
