@@ -16,8 +16,6 @@ function onFormSubmit(evt) {
   evt.preventDefault();
   clearTimeout(timeId);
 
-  /*може через об`єкт?*/
-  // const formData = { delay: 0, step: 0, amount: 0 };
   const formData = ({ delay, step, amount } = evt.target.elements);
 
   let stepValue = Number(formData.delay.value);
