@@ -16,19 +16,15 @@ function onFormSubmit(evt) {
   evt.preventDefault();
   clearTimeout(timeId);
 
-  const formData = ({ delay, step, amount } = evt.target.elements);
+  const { delay, step, amount } = evt.target.elements;
 
-  let stepValue = Number(formData.delay.value);
+  let stepValue = Number(delay.value);
   /*перевірка на нуль і менше*/
-  if (
-    formData.delay.value < 1 ||
-    formData.step.value < 1 ||
-    formData.amount.value < 1
-  ) {
+  if (delay.value < 1 || step.value < 1 || amount.value < 1) {
     Notify.warning(`All values must be greater than zero`);
     return;
   }
-  for (let i = 1; i <= formData.amount.value; i += 1) {
+  for (let i = 1; i <= amount.value; i += 1) {
     createPromise(i, stepValue)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise #${position} in ${delay}ms`);
@@ -36,7 +32,7 @@ function onFormSubmit(evt) {
       .catch(({ position, delay }) => {
         Notify.failure(`❌ Rejected promise #${position} in ${delay}ms`);
       });
-    stepValue += Number(formData.step.value);
+    stepValue += Number(step.value);
   }
   evt.currentTarget.reset();
 }
